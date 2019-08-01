@@ -1,35 +1,43 @@
-# Fortune MongoDB Adapter
+# Fortune Firestore Adapter
 
-[![Build Status](https://img.shields.io/travis/fortunejs/fortune-mongodb/master.svg?style=flat-square)](https://travis-ci.org/fortunejs/fortune-mongodb)
-[![npm Version](https://img.shields.io/npm/v/fortune-mongodb.svg?style=flat-square)](https://www.npmjs.com/package/fortune-mongodb)
-[![License](https://img.shields.io/npm/l/fortune-mongodb.svg?style=flat-square)](https://raw.githubusercontent.com/fortunejs/fortune-mongodb/master/LICENSE)
+This is a [Firestore](https://cloud.google.com/firestore/) adapter for
+[Fortune](http://fortune.js.org/). It uses Google’s [official Node.js client
+for Google Cloud Firestore](https://github.com/googleapis/nodejs-firestore).
 
-This is a MongoDB adapter for [Fortune](http://fortune.js.org/). It uses the [official Node.js MongoDB driver](http://mongodb.github.io/node-mongodb-native/) internally.
+It is forked from
+[fortunejs/mongodb](https://github.com/fortunejs/fortune-mongodb) and
+incoporates some design ideas from the third-party [Google Cloud
+Datastore](https://github.com/patrinhani-ciandt/fortune-datastore) adapter.
 
 
 ## Usage
 
-Install the `fortune-mongodb` package from `npm`:
+Install the `fortune-firestore` package with `yarn` or `npm`:
 
 ```
-$ npm install fortune-mongodb
+$ yarn add fortune-firestore
+```
+
+```
+$ npm install fortune-firestore
 ```
 
 Then use it with Fortune:
 
 ```js
-const fortune = require('fortune')
-const mongodbAdapter = require('fortune-mongodb')
+import fortune from "fortune";
+import firestoreAdapter from "fortune-firestore";
 
 const store = fortune({ ... }, {
   adapter: [
-    mongodbAdapter,
+    firestoreAdapter,
     {
-      // options object, URL is mandatory.
-      url: 'mongodb://localhost:27017/test'
+			projectId: "my firebase/google cloud project id",
+			keyFilename: "",
+			namespace: "fortune-adapter-test"
     }
   ]
-})
+});
 ```
 
 
@@ -37,16 +45,8 @@ const store = fortune({ ... }, {
 
 **Adapter options**:
 
-- `url`: MongoDB connection URL. Required.
-- `enableTransactions`: Use transactions for handling requests, this requires MongoDB to be using a replica set. Default: `false`.
-- `generateId`: Generate the `_id` key on a new document. It must be a function that accepts one argument, the record type, and returns a unique string or number. Optional.
-- `typeMap`: An object that maps type names (keys) to MongoDB collection names (values). For example, `{ user: 'users' }`.
-
-For driver options, see the [official documentation](http://mongodb.github.io/node-mongodb-native/) for details.
-
-In addition to the constructor options, there is also the `query` function in the `find` method, which accepts the query object as an argument, and may either mutate or return the query object. This allows for arbitrary queries.
-
+TK.
 
 ## License
 
-This software is licensed under the [MIT License](//github.com/fortunejs/fortune-mongodb/blob/master/LICENSE).
+This software is licensed under the [MIT License](//github.com/wandertext/fortune-firestore/blob/master/LICENSE).

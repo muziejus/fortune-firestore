@@ -1,16 +1,15 @@
 {
-  "name": "fortune-mongodb",
-  "description": "MongoDB adapter for Fortune.",
-  "version": "1.3.2",
+  "name": "@wandertext/fortune-firestore",
+  "description": "Firestore adapter for Fortune.",
+  "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fortunejs/fortune-mongodb"
+    "url": "git+https://github.com/wandertext/fortune-firestore.git"
   },
   "scripts": {
     "lint": "eslint lib",
-    "test": "npm run lint && node test | tf-dot",
-    "postpublish": "git tag `npm v fortune-mongodb version` && git push origin --tags"
+    "test": "npm run lint && node test | tf-dot"
   },
   "main": "./lib/index.js",
   "dependencies": {
@@ -41,7 +40,16 @@
   },
   "keywords": [
     "fortune",
-    "mongodb",
+    "firestore",
     "adapter"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/wandertext/fortune-firestore/issues"
+  },
+  "homepage": "https://github.com/wandertext/fortune-firestore#readme",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "author": "Moacir P. de Sá Pereira <moacir.p@columbia.edu> (http://moacir.com)"
 }
