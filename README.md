@@ -9,7 +9,7 @@ This is a [Firestore](https://cloud.google.com/firestore/) adapter for
 [Fortune](http://fortune.js.org/). It uses Google’s [official Node.js client
 for Google Cloud Firestore](https://github.com/googleapis/nodejs-firestore).
 
-It is forked from
+It is ported from
 [fortunejs/mongodb](https://github.com/fortunejs/fortune-mongodb) and
 incoporates some design ideas from the third-party [Google Cloud
 Datastore](https://github.com/patrinhani-ciandt/fortune-datastore) adapter.
