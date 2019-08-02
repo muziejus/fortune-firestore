@@ -1,5 +1,5 @@
 {
-  "name": "@wandertext/fortune-firestore",
+  "name": "fortune-firestore",
   "description": "Firestore adapter for Fortune.",
   "version": "0.0.1",
   "license": "MIT",

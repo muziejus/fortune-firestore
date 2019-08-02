@@ -1,7 +1,7 @@
 # Fortune Firestore Adapter
 
 [![Build Status](https://img.shields.io/travis/com/wandertext/fortune-firestore)](https://travis-ci.com/wandertext/fortune-firestore)
-[![npm Version](https://img.shields.io/npm/v/@wandertext/fortune-firestore)](https://www.npmjs.com/package/@wandertext/fortune-firestore)
+[![npm Version](https://img.shields.io/npm/v/fortune-firestore)](https://www.npmjs.com/package/fortune-firestore)
 [![License](https://img.shields.io/github/license/wandertext/fortune-firestore)](https://raw.githubusercontent.com/wandertext/fortune-firestore/master/LICENSE)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 
