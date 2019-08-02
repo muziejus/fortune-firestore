@@ -1,5 +1,10 @@
 # Fortune Firestore Adapter
 
+[![Build Status](https://img.shields.io/travis/wandertext/fortune-firestore/master.svg?style=flat-square)](https://travis-ci.org/wandertext/fortune-firestore)
+[![npm Version](https://img.shields.io/npm/v/fortune-firestore.svg?style=flat-square)](https://www.npmjs.com/package/@wandertext/fortune-firestore)
+[![License](https://img.shields.io/npm/l/fortune-firestore.svg?style=flat-square)](https://raw.githubusercontent.com/wandertext/fortune-firestore/master/LICENSE)
+[![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
+
 This is a [Firestore](https://cloud.google.com/firestore/) adapter for
 [Fortune](http://fortune.js.org/). It uses Google’s [official Node.js client
 for Google Cloud Firestore](https://github.com/googleapis/nodejs-firestore).
