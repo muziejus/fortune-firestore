@@ -8,7 +8,7 @@
     "url": "git+https://github.com/wandertext/fortune-firestore.git"
   },
   "scripts": {
-    "lint": "eslint lib",
+    "lint": "xo lib",
     "test": "npm run lint && node test | tf-dot"
   },
   "main": "./lib/index.js",
@@ -23,7 +23,8 @@
     "fortune": "^5.5.14",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.2",
-    "tapdance": "^5.1.1"
+    "tapdance": "^5.1.1",
+    "xo": "^0.24.0"
   },
   "files": [
     "lib/",
@@ -51,5 +52,22 @@
     "lib": "lib",
     "test": "test"
   },
-  "author": "Moacir P. de Sá Pereira <moacir.p@columbia.edu> (http://moacir.com)"
+  "author": "Moacir P. de Sá Pereira <moacir.p@columbia.edu> (http://moacir.com)",
+  "xo": {
+    "envs": [
+      "amd"
+    ],
+    "prettier": true,
+    "space": true,
+    "rules": {
+      "quotes": [
+        "error",
+        "double"
+      ]
+    }
+  },
+  "prettier": {
+    "singleQuote": false,
+    "bracketSpacing": true
+  }
 }
