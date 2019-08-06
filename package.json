@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "xo lib",
     "test:lint": "npm run lint && node test | tf-dot",
-    "test": "npx mocha spec/adapter.spec.js"
+    "test": "npx mocha spec/**/*.spec.js"
   },
   "main": "./lib/index.js",
   "dependencies": {
