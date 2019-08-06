@@ -9,7 +9,8 @@
   },
   "scripts": {
     "lint": "xo lib",
-    "test": "npm run lint && node test | tf-dot"
+    "test:lint": "npm run lint && node test | tf-dot",
+    "test": "node test | tf-dot"
   },
   "main": "./lib/index.js",
   "dependencies": {
@@ -63,7 +64,8 @@
       "quotes": [
         "error",
         "double"
-      ]
+      ],
+      "promise/prefer-await-to-then": "warn"
     }
   },
   "prettier": {
