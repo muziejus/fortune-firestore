@@ -1,3 +1,9 @@
+require("./spec-helper");
+const { expect } = require("chai");
+const { setup, teardown } = require("./helpers");
+const { records } = require("./fixtures");
+
+/*
 const Adapter = require("fortune/adapter")
 const AdapterSingleton = require("fortune/adapter/singleton")
 const common = require("fortune/common")
@@ -12,25 +18,23 @@ const filter = require("fortune/common/array/filter")
 const keys = require("fortune/common/keys")
 const denormalizedInverseKey = keys.denormalizedInverse
 const primaryKey = keys.primary
-
-/*
-
-const testAdapter = require("fortune/test/adapter")
-
-const adapter = require("../lib")
-
-testAdapter(adapter, {
-  projectId: "fortune-firestore-unit-tests",
-  credentials: {
-    client_email: "fortune-firestore@example.com",
-    private_key: "private_key"
-  },
-  apiEndpoint: "http://localhost:8080",
-  namespace: "fortune-adapter-test",
-  generateId: () => Math.floor(Math.random() * Math.pow(2, 32)).toString(16)
-})
-
 */
 
-import { expect } from "chai";
+describe("Fortune Firestore Adapter", function() {
+  let db;
+  let ref;
 
+  before(async function() {
+    db = await setup(null, records);
+    ref = db.collection("users");
+  });
+
+  after(async function() {
+    await teardown();
+  });
+
+  it("cannot access an arbitrary collection", async function() {
+    return expect(ref.get()).to.eventually.be.fulfilled;
+  });
+
+});
