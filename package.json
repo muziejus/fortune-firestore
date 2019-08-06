@@ -14,29 +14,20 @@
   },
   "main": "./lib/index.js",
   "dependencies": {
-    "@google-cloud/firestore": "^2.2.4"
+    "@firebase/testing": "^0.11.9",
+    "@google-cloud/firestore": "^2.2.4",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
   },
   "devDependencies": {
-    "@tap-format/dot": "^0.3.0",
-    "chalk": "^2.4.1",
     "eslint": "^5.7.0",
-    "eslint-config-boss": "^1.0.6",
     "fortune": "^5.5.14",
-    "mkdirp": "^0.5.1",
-    "rimraf": "^2.6.2",
-    "tapdance": "^5.1.1",
     "xo": "^0.24.0"
   },
   "files": [
     "lib/",
     "LICENSE"
   ],
-  "eslintConfig": {
-    "extends": "boss",
-    "rules": {
-      "strict": 0
-    }
-  },
   "engines": {
     "node": ">=8"
   },
