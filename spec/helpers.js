@@ -7,6 +7,8 @@ const FirestoreAdapter = require("../lib");
 const { recordTypes } = require("./fixtures");
 
 const projectId = "fortune-firestore-spec";
+const client_email = "fortune-firestore@example.com";
+const private_key = "private_key";
 const port = 8080;
 const coverageUrl = `http://localhost:${port}/emulator/v1/projects/${projectId}:ruleCoverage.html`;
 
@@ -19,10 +21,13 @@ module.exports.buildAdapter = async () => {
       adapter: [
         FirestoreAdapter,
         {
-          projectId: "fortune-firestore-unit-tests",
+          typeMap: {
+            user: "users"
+          },
+          projectId,
           credentials: {
-            client_email: "fortune-firestore@example.com",
-            private_key: "private_key"
+            client_email,
+            private_key
           }
         }
       ]
