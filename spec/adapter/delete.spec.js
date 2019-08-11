@@ -1,23 +1,26 @@
 require("../spec-helper");
 const { expect } = require("chai");
-const { setup, teardown } = require("../helpers");
+const { setup, teardown, buildAdapter } = require("../helpers");
 const { records } = require("../fixtures");
 
 describe("Fortune Firestore Adapter", function() {
   describe("#delete(type, [ids], [meta])", async function() {
-    let db;
-    let ref;
+    let adapter;
 
     before(async function() {
-      db = await setup(null, records);
-      ref = db.collection("users");
+      adapter = await buildAdapter();
+      await setup(null, records);
     });
 
     after(async function() {
       await teardown();
     });
 
-    it("no-ops when ids is an empty array");
+    it("no-ops when records is an empty array", async function() {
+      const records = await adapter.delete("user", []);
+      expect(records).to.equal(0);
+    });
+
     it("deletes records");
   });
 });

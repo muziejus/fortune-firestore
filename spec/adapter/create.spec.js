@@ -6,11 +6,10 @@ const { records } = require("../fixtures");
 describe("Fortune Firestore Adapter", function() {
   describe("#create(type, records, [meta])", async function() {
     let adapter;
-    let db;
 
     before(async function() {
       adapter = await buildAdapter();
-      db = await setup(null, records);
+      await setup(null, records);
     });
 
     after(async function() {
