@@ -1,23 +1,26 @@
 require("../spec-helper");
 const { expect } = require("chai");
-const { setup, teardown } = require("../helpers");
+const { setup, teardown, buildAdapter } = require("../helpers");
 const { records } = require("../fixtures");
 
 describe("Fortune Firestore Adapter", function() {
   describe("#find(type, [ids], [options], [meta])", async function() {
-    let db;
-    let ref;
+    let adapter;
 
     before(async function() {
-      db = await setup(null, records);
-      ref = db.collection("users");
+      adapter = await buildAdapter();
+      await setup(null, records);
     });
 
     after(async function() {
       await teardown();
     });
 
-    it("returns no records when ids is an empty array");
+    it("no-ops when ids is an empty array", async function() {
+      const ids = await adapter.create("user", []);
+      expect(ids).to.deep.equal([]);
+    });
+
     it("returns a single id correctly with proper types");
     it("returns the second document with proper typing");
     it("returns the whole collection when ids is undefined");
