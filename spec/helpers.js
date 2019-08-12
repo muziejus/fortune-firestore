@@ -39,7 +39,7 @@ module.exports.buildAdapter = async () => {
   return adapter;
 };
 
-module.exports.setup = async (auth, data) => {
+module.exports.setupDB = async (auth, data) => {
   const rules = fs.readFileSync(
     "./spec/firestore-files/firestore.rules",
     "utf8"

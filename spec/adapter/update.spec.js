@@ -1,6 +1,6 @@
 require("../spec-helper");
 const { expect } = require("chai");
-const { setup, teardown, buildAdapter } = require("../helpers");
+const { setupDB, teardown, buildAdapter } = require("../helpers");
 const { records } = require("../fixtures");
 
 describe("Fortune Firestore Adapter", function() {
@@ -9,7 +9,7 @@ describe("Fortune Firestore Adapter", function() {
 
     before(async function() {
       adapter = await buildAdapter();
-      await setup(null, records);
+      await setupDB(null, records);
     });
 
     after(async function() {
