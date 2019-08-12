@@ -77,8 +77,20 @@ describe("Fortune Firestore Adapter", function() {
       expect(records.length).to.equal(1);
       expect(records[0].name).to.equal("john");
     });
+    it("returns the correct records when options includes a date range", async function() {
+      let records = await adapter.find("user", null, {
+        range: { birthday: [null, new Date()] }
+      });
+      expect(records.length).to.equal(1);
+      expect(records[0].name).to.equal("bob");
+      records = await adapter.find("user", null, {
+        range: { birthday: [new Date(Date.now() - 10 * 1000), new Date()] }
+      });
+      expect(records.length).to.equal(1);
+      expect(records[0].name).to.equal("bob");
+    });
+
     /*
-    it("returns the correct records when options includes a date range");
     it("returns the correct records when options includes an array range");
     it("returns the correct records when options includes a string matcher");
     it("returns the correct records when options includes a link matcher");
