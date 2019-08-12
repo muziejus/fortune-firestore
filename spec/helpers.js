@@ -2,6 +2,7 @@
 const fs = require("fs");
 const firebase = require("@firebase/testing");
 const message = require("fortune/lib/common/message");
+const keys = require("fortune/lib/common/keys");
 const AdapterSingleton = require("fortune/lib/adapter/singleton");
 const FirestoreAdapter = require("../lib");
 const { recordTypes } = require("./fixtures");
@@ -9,8 +10,6 @@ const { recordTypes } = require("./fixtures");
 const projectId = "fortune-firestore-spec";
 const client_email = "fortune-firestore@example.com";
 const private_key = "private_key";
-const port = 8080;
-const coverageUrl = `http://localhost:${port}/emulator/v1/projects/${projectId}:ruleCoverage.html`;
 
 module.exports.buildAdapter = async () => {
   let adapter;
@@ -71,5 +70,10 @@ module.exports.setupDB = async (auth, data) => {
 
 module.exports.teardown = async () => {
   await Promise.all(firebase.apps().map(app => app.delete()));
-  console.log(`View rule coverage information at ${coverageUrl}\n`);
 };
+
+module.exports.testIds = records =>
+  records.filter(record => {
+    const type = typeof record[keys.primary];
+    return type !== "string" && type !== "number";
+  });
