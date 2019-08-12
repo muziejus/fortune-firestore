@@ -90,8 +90,21 @@ describe("Fortune Firestore Adapter", function() {
       expect(records[0].name).to.equal("bob");
     });
 
+    it.skip("returns the correct records when options includes an array range", async function() {
+      // This is going to take a while and rely, perhaps, on getting the Buffer thing to work.
+      let records = await adapter.find("user", null, {
+        range: { privateKeys: [1, 2] }
+      });
+      expect(records.length).to.equal(1);
+      expect(records[0].name).to.equal("john");
+      records = await adapter.find("user", null, {
+        range: { privateKeys: [1, null] }
+      });
+      expect(records.length).to.equal(1);
+      expect(records[0].name).to.equal("john");
+    });
+
     /*
-    it("returns the correct records when options includes an array range");
     it("returns the correct records when options includes a string matcher");
     it("returns the correct records when options includes a link matcher");
     it("returns the correct records when options includes a buffer matcher");
