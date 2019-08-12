@@ -10,17 +10,18 @@
   "scripts": {
     "lint": "xo lib",
     "test:lint": "npm run lint && node test | tf-dot",
-    "test": "FIRESTORE_EMULATOR_HOST=localhost:8080 npx mocha spec/**/*.spec.js"
+    "test": "npx mocha spec/**/*.spec.js"
   },
   "main": "./lib/index.js",
   "dependencies": {
     "@google-cloud/firestore": "^2.2.4"
   },
   "devDependencies": {
-    "debug": "^4.1.1",
     "@firebase/testing": "^0.11.9",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "debug": "^4.1.1",
+    "dotenv": "^8.0.0",
     "eslint": "^5.7.0",
     "fortune": "^5.5.14",
     "mocha": "^6.2.0",
