@@ -53,17 +53,18 @@ describe("Fortune Firestore Adapter", function() {
     });
 
     it("returns the correct records when options includes a numerical range", async function() {
-      const records = await adapter.find("user", null, {
+      let records = await adapter.find("user", null, {
         range: { age: [36, 38] }
       });
       expect(records.length).to.equal(1);
       expect(records[0].name).to.equal("john");
-      /*
-      records = await adapter.find("user", null, { range: { age: [ null, 36 ] } });
+      records = await adapter.find("user", null, {
+        range: { age: [null, 36] }
+      });
       expect(records.length).to.equal(1);
       expect(records[0].name).to.equal("john");
-      */
     });
+
     /*
     it("returns the correct records when options includes a string range");
     it("returns the correct records when options includes a date range");
