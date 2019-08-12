@@ -1,15 +1,20 @@
 require("../spec-helper");
 const { expect } = require("chai");
-const { setup, teardown, buildAdapter } = require("../helpers");
+const keys = require("fortune/lib/common/keys");
+const { setupDB, teardown, buildAdapter, testIds } = require("../helpers");
 const { records } = require("../fixtures");
 
 describe("Fortune Firestore Adapter", function() {
   describe("#find(type, [ids], [options], [meta])", async function() {
     let adapter;
+    const primaryKey = keys.primary;
 
     before(async function() {
+      await setupDB(null, records);
       adapter = await buildAdapter();
-      await setup(null, records);
+      // const connect = await adapter.connect();
+      // console.log("ps", connect);
+      await adapter.connect();
     });
 
     after(async function() {
@@ -17,13 +22,36 @@ describe("Fortune Firestore Adapter", function() {
     });
 
     it("no-ops when ids is an empty array", async function() {
-      const ids = await adapter.create("user", []);
-      expect(ids).to.deep.equal([]);
+      const records = await adapter.find("user", []);
+      expect(records).to.deep.equal([]);
     });
 
-    it("returns a single id correctly with proper types");
-    it("returns the second document with proper typing");
-    it("returns the whole collection when ids is undefined");
+    it("returns a single record correctly with proper types", async function() {
+      const records = await adapter.find("user", [ 1 ]);
+      expect(records.count).to.equal(1);
+      expect(records[0][primaryKey]).to.equal(1);
+      expect(records[0].birthday).to.be.instanceof(Date);
+      expect(records[0].isAlive).to.be.a("boolean");
+      expect(records[0].age).to.be.a("number");
+      expect(records[0].junk).to.deep.equal({ things: [ "a", "b", "c" ]});
+      expect(Object.keys(records[0])).to.not.include("__user_nemesis_inverse");
+    });
+
+    it("returns the second document with proper typing", async function() {
+      const records = await adapter.find("user", [ 2 ]);
+      expect(records.count).to.equal(1);
+      expect(records[0][primaryKey]).to.equal(2);
+      // expect Buffer to be a buffer
+      // expect Buffer to have the value of a buffer
+      // expect array of Buffers to be correct
+    });
+
+    it("returns the whole collection when ids is undefined", async function() {
+      const records = await adapter.find("user");
+      expect(records.count).to.equal(2);
+      expect(testIds(records).length).to.equal(0);
+    });
+        /*
     it("returns the correct records when options includes a numerical range");
     it("returns the correct records when options includes a string range");
     it("returns the correct records when options includes a date range");
@@ -58,5 +86,6 @@ describe("Fortune Firestore Adapter", function() {
     it("does find: logical or #2");
     it("tracks multiple logical operators #1");
     it("tracks multiple logical operators #2");
+    */
   });
 });
