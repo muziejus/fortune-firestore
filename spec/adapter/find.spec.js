@@ -120,10 +120,18 @@ describe("Fortune Firestore Adapter", function() {
       expect(records[0].name).to.equal("bob");
     });
 
-    /*
     it("returns the correct records when options includes a buffer matcher");
+
+    // Relies on privateKey, which is a buffer.
     it("returns the correct records when options includes an array matcher #1");
-    it("returns no records when the criteria match no records");
+    it("returns the correct records when options includes an array matcher #2");
+
+    it("returns no records when the criteria match no records", async function() {
+      const records = await adapter.find("user", null, { match: { name: "bob", age: 36 } });
+      expect(records.length).to.equal(0);
+    });
+
+    /*
     it("returns the correct records when matching on field existence");
     it("returns the correct records when matching on field inexistence");
     it("returns the correct records when matching on an empty array");
