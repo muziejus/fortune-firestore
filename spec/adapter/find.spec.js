@@ -120,30 +120,66 @@ describe("Fortune Firestore Adapter", function() {
       expect(records[0].name).to.equal("bob");
     });
 
-    it("returns the correct records when options includes a buffer matcher");
-
     // Relies on privateKey, which is a buffer.
+    it("returns the correct records when options includes a buffer matcher");
     it("returns the correct records when options includes an array matcher #1");
     it("returns the correct records when options includes an array matcher #2");
 
     it("returns no records when the criteria match no records", async function() {
-      const records = await adapter.find("user", null, { match: { name: "bob", age: 36 } });
+      const records = await adapter.find("user", null, {
+        match: { name: "bob", age: 36 }
+      });
       expect(records.length).to.equal(0);
     });
 
+    it.skip("returns the correct records when matching on field existence", async function() {
+      // Relies on Buffer
+      const records = await adapter.find("user", null, {
+        exists: { picture: true }
+      });
+      expect(records[0][primaryKey]).to.equal(2);
+    });
+
+    it.skip("returns the correct records when matching on field inexistence", async function() {
+      // Relies on Buffer
+      const records = await adapter.find("user", null, {
+        exists: { picture: false }
+      });
+      expect(records[0][primaryKey]).to.equal(1);
+    });
+
+    it.skip("returns the correct records when matching on an empty array", async function() {
+      // Relies on Buffer
+      let records = await adapter.find("user", null, {
+        exists: { privateKeys: true }
+      });
+      expect(records[0][primaryKey]).to.equal(2);
+      records = await adapter.find("user", null, {
+        exists: { privateKeys: false }
+      });
+      expect(records[0][primaryKey]).to.equal(1);
+    });
+
+    it("sorts records ascending when options includes a sort ascending property", async function() {
+      const records = await adapter.find("user", null, { sort: { age: true } });
+      expect(records.map(r => r.age)).to.deep.equal([36, 42]);
+    });
+
+    it("sorts records descending when options includes a sort descending property", async function() {
+      const records = await adapter.find("user", null, {
+        sort: { age: false }
+      });
+      expect(records.map(r => r.age)).to.deep.equal([42, 36]);
+    });
+
+    it("sorts records by combination when options includes combined sorting properties", async function() {
+      const records = await adapter.find("user", null, {
+        sort: { age: true, name: true }
+      });
+      expect(records.map(r => r.age)).to.deep.equal([36, 42]);
+    });
+
     /*
-    it("returns the correct records when matching on field existence");
-    it("returns the correct records when matching on field inexistence");
-    it("returns the correct records when matching on an empty array");
-    it(
-      "sorts records ascending when options includes a sort ascending property"
-    );
-    it(
-      "sorts records descending when options includes a sort descending property"
-    );
-    it(
-      "sorts records by combination when options includes combined sorting properties"
-    );
     it(
       "limits and offsets results when options includes limit and offset properties"
     );
