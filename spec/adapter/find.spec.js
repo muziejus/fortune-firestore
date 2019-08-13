@@ -104,9 +104,23 @@ describe("Fortune Firestore Adapter", function() {
       expect(records[0].name).to.equal("john");
     });
 
+    it.skip("returns the correct records when options includes a string matcher", async function() {
+      const records = await adapter.find("user", null, {
+        match: { name: ["john", "xyz"], age: 36 }
+      });
+      expect(records.length).to.equal(1);
+      expect(records[0].name).to.equal("john");
+    });
+
+    it("returns the correct records when options includes a link matcher", async function() {
+      const records = await adapter.find("user", null, {
+        match: { friends: 2 }
+      });
+      expect(records.length).to.equal(1);
+      expect(records[0].name).to.equal("bob");
+    });
+
     /*
-    it("returns the correct records when options includes a string matcher");
-    it("returns the correct records when options includes a link matcher");
     it("returns the correct records when options includes a buffer matcher");
     it("returns the correct records when options includes an array matcher #1");
     it("returns no records when the criteria match no records");
