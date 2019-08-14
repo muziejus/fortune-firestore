@@ -12,8 +12,6 @@ describe("Fortune Firestore Adapter", function() {
     before(async function() {
       await setupDB(null, records);
       adapter = await buildAdapter();
-      // const connect = await adapter.connect();
-      // console.log("ps", connect);
       await adapter.connect();
     });
 
@@ -77,6 +75,7 @@ describe("Fortune Firestore Adapter", function() {
       expect(records.length).to.equal(1);
       expect(records[0].name).to.equal("john");
     });
+
     it("returns the correct records when options includes a date range", async function() {
       let records = await adapter.find("user", null, {
         range: { birthday: [null, new Date()] }
@@ -179,10 +178,13 @@ describe("Fortune Firestore Adapter", function() {
       expect(records.map(r => r.age)).to.deep.equal([36, 42]);
     });
 
-    /*
     it(
       "limits and offsets results when options includes limit and offset properties"
     );
+    
+    /* These all rely on `adapter.features.logicalOperators` being set, 
+     * so as these are an optional adapter feature, I can skip them.
+     * There's no way Firestore can do { and: [] }-type queries.
     it("does find: fields #1");
     it("does find: fields #2");
     it("does find: logical not #1");
