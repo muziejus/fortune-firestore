@@ -178,10 +178,16 @@ describe("Fortune Firestore Adapter", function() {
       expect(records.map(r => r.age)).to.deep.equal([36, 42]);
     });
 
-    it(
-      "limits and offsets results when options includes limit and offset properties"
-    );
-    
+    it("limits and offsets results when options includes limit and offset properties", async function() {
+      const records = await adapter.find("user", null, {
+        offset: 1,
+        limit: 1,
+        sort: { name: true }
+      });
+      expect(records.length).to.equal(1);
+      expect(records[0].name).to.equal("john");
+    });
+
     /* These all rely on `adapter.features.logicalOperators` being set, 
      * so as these are an optional adapter feature, I can skip them.
      * There's no way Firestore can do { and: [] }-type queries.
