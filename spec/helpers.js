@@ -9,7 +9,7 @@ const { recordTypes } = require("./fixtures");
 
 const projectId = process.env.FIRESTORE_PROJECT_ID;
 const client_email = process.env.FIRESTORE_CLIENT_EMAIL;
-const private_key = process.env.FIRESTORE_PRIVATE_KEY;
+const private_key = process.env.FIRESTORE_PRIVATE_KEY || Buffer.from(process.env.FIRESTORE_PRIVATE_KEY_HEX, "hex").toString("ascii");
 
 module.exports.buildAdapter = async () => {
   let adapter;
