@@ -1,7 +1,7 @@
 {
   "name": "fortune-firestore",
   "description": "Firestore adapter for Fortune.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "eslint": "^5.7.0",
     "fortune": "^5.5.14",
     "mocha": "^6.2.0",
+    "standard-version": "^7.0.0",
     "xo": "^0.24.0"
   },
   "files": [
