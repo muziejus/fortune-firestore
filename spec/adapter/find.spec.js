@@ -8,6 +8,8 @@ describe("Fortune Firestore Adapter", function() {
   describe("#find(type, [ids], [options], [meta])", async function() {
     let adapter;
     const primaryKey = keys.primary;
+    const deadbeef = Buffer.from("deadbeef", "hex");
+    const key1 = Buffer.from("cafe", "hex");
 
     before(async function() {
       await setupDB(null, records);
@@ -39,9 +41,11 @@ describe("Fortune Firestore Adapter", function() {
       const records = await adapter.find("user", [2]);
       expect(records.count).to.equal(1);
       expect(records[0][primaryKey]).to.equal(2);
-      // Expect Buffer to be a buffer
-      // Expect Buffer to have the value of a buffer
-      // Expect array of Buffers to be correct
+      expect(records[0].picture).to.be.instanceof(Buffer);
+      expect(records[0].picture).to.deep.equal(deadbeef);
+      expect(
+        records[0].privateKeys.map(key => key.toString("hex"))
+      ).to.deep.equal(["cafe", "babe"]);
     });
 
     it("returns the whole collection when ids is undefined", async function() {
@@ -89,8 +93,7 @@ describe("Fortune Firestore Adapter", function() {
       expect(records[0].name).to.equal("bob");
     });
 
-    it.skip("returns the correct records when options includes an array range", async function() {
-      // This is going to take a while and rely, perhaps, on getting the Buffer thing to work.
+    it("returns the correct records when options includes an array range", async function() {
       let records = await adapter.find("user", null, {
         range: { privateKeys: [1, 2] }
       });
@@ -103,7 +106,11 @@ describe("Fortune Firestore Adapter", function() {
       expect(records[0].name).to.equal("john");
     });
 
-    it.skip("returns the correct records when options includes a string matcher", async function() {
+    it("returns the correct records when options includes a string matcher", async function() {
+      // This match returns every record where the name is in the array sent over.
+      // It stricks me that this can't be done w/o an OR, which means that
+      // this relies on branching queries. This won't happen
+      // right away…
       const records = await adapter.find("user", null, {
         match: { name: ["john", "xyz"], age: 36 }
       });
@@ -119,10 +126,29 @@ describe("Fortune Firestore Adapter", function() {
       expect(records[0].name).to.equal("bob");
     });
 
-    // Relies on privateKey, which is a buffer.
-    it("returns the correct records when options includes a buffer matcher");
-    it("returns the correct records when options includes an array matcher #1");
-    it("returns the correct records when options includes an array matcher #2");
+    it("returns the correct records when options includes a buffer matcher", async function() {
+      const records = await adapter.find("user", null, {
+        match: { picture: deadbeef }
+      });
+      expect(records.count).to.equal(1);
+      expect(records[0].picture).to.deep.equal(deadbeef);
+    });
+
+    it("returns the correct records when options includes an array matcher #1", async function() {
+      const records = await adapter.find("user", null, {
+        match: { privateKeys: key1 }
+      });
+      expect(records.count).to.equal(1);
+      expect(records[0][primaryKey]).to.equal(2);
+    });
+
+    it("returns the correct records when options includes an array matcher #2", async function() {
+      const records = await adapter.find("user", null, {
+        match: { privateKeys: [key1] }
+      });
+      expect(records.count).to.equal(1);
+      expect(records[0][primaryKey]).to.equal(2);
+    });
 
     it("returns no records when the criteria match no records", async function() {
       const records = await adapter.find("user", null, {
@@ -131,24 +157,21 @@ describe("Fortune Firestore Adapter", function() {
       expect(records.length).to.equal(0);
     });
 
-    it.skip("returns the correct records when matching on field existence", async function() {
-      // Relies on Buffer
+    it("returns the correct records when matching on field existence", async function() {
       const records = await adapter.find("user", null, {
         exists: { picture: true }
       });
       expect(records[0][primaryKey]).to.equal(2);
     });
 
-    it.skip("returns the correct records when matching on field inexistence", async function() {
-      // Relies on Buffer
+    it("returns the correct records when matching on field inexistence", async function() {
       const records = await adapter.find("user", null, {
         exists: { picture: false }
       });
       expect(records[0][primaryKey]).to.equal(1);
     });
 
-    it.skip("returns the correct records when matching on an empty array", async function() {
-      // Relies on Buffer
+    it("returns the correct records when matching on an empty array", async function() {
       let records = await adapter.find("user", null, {
         exists: { privateKeys: true }
       });

@@ -11,9 +11,9 @@ Integer.prototype = Number();
 
 const buffer =
   Buffer.from || ((input, encoding) => Buffer.from(input, encoding));
-const deadbeef = buffer("deadbeef", "hex");
-const key1 = buffer("cafe", "hex");
-const key2 = buffer("babe", "hex");
+const deadbeef = buffer("deadbeef", "hex").toString("base64");
+const key1 = buffer("cafe", "hex").toString("base64");
+const key2 = buffer("babe", "hex").toString("base64");
 
 const recordTypes = {
   user: {
@@ -22,8 +22,8 @@ const recordTypes = {
     isAlive: { type: Boolean },
     birthday: { type: Date },
     junk: { type: Object },
-    // picture: { type: Buffer },
-    // privateKeys: { type: Buffer, isArray: true },
+    picture: { type: Buffer },
+    privateKeys: { type: Buffer, isArray: true },
     nicknames: { type: String, isArray: true },
     friends: { link: "user", isArray: true, inverse: "friends" },
     nemesis: { link: "user", inverse: "__user_nemesis_inverse" },
@@ -45,7 +45,7 @@ const records = {
     isAlive: true,
     junk: { things: ["a", "b", "c"] },
     birthday: new Date(),
-    // privateKeys: [],
+    privateKeys: [],
     friends: [2],
     bestFriend: 2
   },
@@ -54,8 +54,8 @@ const records = {
     name: "john",
     age: 36,
     isAlive: false,
-    // picture: deadbeef,
-    // privateKeys: [key1, key2],
+    picture: deadbeef,
+    privateKeys: [key1, key2],
     friends: [1],
     bestFriend: 1
   }
