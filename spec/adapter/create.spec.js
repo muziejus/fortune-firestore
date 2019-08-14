@@ -5,15 +5,17 @@ const { records } = require("../fixtures");
 
 describe("Fortune Firestore Adapter", function() {
   describe("#create(type, records, [meta])", async function() {
+    let db;
     let adapter;
 
     before(async function() {
+      db = await setupDB(null, records);
       adapter = await buildAdapter();
-      await setupDB(null, records);
+      await adapter.connect();
     });
 
     after(async function() {
-      await teardown();
+      await teardown(db);
     });
 
     it("no-ops when records is an empty array", async function() {

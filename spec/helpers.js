@@ -1,15 +1,15 @@
 /* eslint no-await-in-loop: 0, camelcase: 0 */
 const fs = require("fs");
-const firebase = require("@firebase/testing");
+const Firestore = require("@google-cloud/firestore");
 const message = require("fortune/lib/common/message");
 const keys = require("fortune/lib/common/keys");
 const AdapterSingleton = require("fortune/lib/adapter/singleton");
 const FirestoreAdapter = require("../lib");
 const { recordTypes } = require("./fixtures");
 
-const projectId = "fortune-firestore-spec";
-const client_email = "fortune-firestore@example.com";
-const private_key = "private_key";
+const projectId = process.env.FIRESTORE_PROJECT_ID;
+const client_email = process.env.FIRESTORE_CLIENT_EMAIL;
+const private_key = process.env.FIRESTORE_PRIVATE_KEY;
 
 module.exports.buildAdapter = async () => {
   let adapter;
@@ -39,23 +39,11 @@ module.exports.buildAdapter = async () => {
 };
 
 module.exports.setupDB = async (auth, data) => {
-  const rules = fs.readFileSync(
-    "./spec/firestore-files/firestore.rules",
-    "utf8"
-  );
-  const app = await firebase.initializeTestApp({
+  const db = new Firestore({
     projectId,
-    auth
+    credentials: { client_email, private_key }
   });
 
-  const db = app.firestore();
-
-  await firebase.loadFirestoreRules({
-    projectId,
-    rules
-  });
-
-  // Mock documents before rules
   if (data) {
     for (const key in data) {
       if ({}.hasOwnProperty.call(data, key)) {
@@ -68,8 +56,17 @@ module.exports.setupDB = async (auth, data) => {
   return db;
 };
 
-module.exports.teardown = async () => {
-  await Promise.all(firebase.apps().map(app => app.delete()));
+module.exports.teardown = async db => {
+  await db
+    .collection("users")
+    .get()
+    .then(refs =>
+      refs.docs.map(doc => {
+        db.collection("users")
+          .doc(doc.id)
+          .delete();
+      })
+    );
 };
 
 module.exports.testIds = records =>

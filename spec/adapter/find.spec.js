@@ -6,19 +6,20 @@ const { records } = require("../fixtures");
 
 describe("Fortune Firestore Adapter", function() {
   describe("#find(type, [ids], [options], [meta])", async function() {
+    let db;
     let adapter;
     const primaryKey = keys.primary;
     const deadbeef = Buffer.from("deadbeef", "hex");
     const key1 = Buffer.from("cafe", "hex");
 
     before(async function() {
-      await setupDB(null, records);
+      db = await setupDB(null, records);
       adapter = await buildAdapter();
       await adapter.connect();
     });
 
     after(async function() {
-      await teardown();
+      await teardown(db);
     });
 
     it("no-ops when ids is an empty array", async function() {
