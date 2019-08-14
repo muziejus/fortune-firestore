@@ -24,19 +24,13 @@ describe("Fortune Firestore Adapter", function() {
       expect(ids).to.equal(0);
     });
 
-    it.skip("deletes records", async function() {
+    it("deletes records", async function() {
       const primaryKey = keys.primary;
-      // const numberDeleted = await adapter.delete("user", [1, 3]);
-      const numberDeleted = await adapter.delete("user", [1]);
-      expect(numberDeleted).to.equal(1);
-      // console.log("delte 2");
-      // const remainingRecords = await adapter.find("user", [1, 2]);
-      // console.log("delte 4");
-      // expect(remainingRecords.count).to.equal(1);
-      // console.log(remainingRecords);
-      // expect(remainingRecords.map(record => record[primaryKey])).to.deep.equal([
-      //   2
-      // ]);
+      const numberDeleted = await adapter.delete("user", [1, 3]);
+      expect(numberDeleted).to.be.gte(1);
+      const records = await adapter.find("user", [1, 2]);
+      expect(records.count).to.equal(1);
+      expect(records.map(record => record[primaryKey])).to.deep.equal([2]);
     });
   });
 });
