@@ -43,9 +43,11 @@ describe("Fortune Firestore Adapter", function() {
     });
 
     it("does not allow using duplicate ids", async function() {
-      let records = await adapter.find("user");
+      const records = await adapter.find("user");
       expect(records).to.have.length(2);
-      expect(adapter.create("user", [{ id: 1 }])).to.be.rejectedWith(ConflictError);
+      expect(adapter.create("user", [{ id: 1 }])).to.be.rejectedWith(
+        ConflictError
+      );
     });
 
     it("generates an id when none is given", async function() {

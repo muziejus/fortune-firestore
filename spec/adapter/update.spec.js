@@ -76,9 +76,7 @@ describe("Fortune Firestore Adapter", function() {
       ]);
       expect(updatesNumber).to.equal(2);
       const records = await adapter.find("user");
-      expect(
-        records.filter(record => record.friends.length)
-      ).to.have.length(0);
+      expect(records.filter(record => record.friends.length)).to.have.length(0);
     });
   });
 });
