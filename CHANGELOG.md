@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/wandertext/fortune-firestore/compare/v0.2.1...v0.3.0) (2019-08-16)
+
+
+### Features
+
+* Adapter#delete now returns accurate count of deleted records ([f980035](https://github.com/wandertext/fortune-firestore/commit/f980035))
+* Add support for three option types. ([346caaf](https://github.com/wandertext/fortune-firestore/commit/346caaf))
+
 ### [0.2.1](https://github.com/wandertext/fortune-firestore/compare/v0.2.0...v0.2.1) (2019-08-15)
 
 
