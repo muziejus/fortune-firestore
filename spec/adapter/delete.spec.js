@@ -2,7 +2,7 @@ require("../spec-helper");
 const { expect } = require("chai");
 const keys = require("fortune/lib/common/keys");
 const { setupDB, teardown, buildAdapter } = require("../helpers");
-const { records } = require("../fixtures");
+const { defaultRecords } = require("../fixtures");
 
 describe("Fortune Firestore Adapter", function() {
   describe("#delete(type, [ids], [meta])", async function() {
@@ -10,7 +10,7 @@ describe("Fortune Firestore Adapter", function() {
     let db;
 
     before(async function() {
-      db = await setupDB(null, records);
+      db = await setupDB(null, defaultRecords);
       adapter = await buildAdapter();
       await adapter.connect();
     });

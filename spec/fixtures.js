@@ -37,7 +37,7 @@ const recordTypes = {
   }
 };
 
-const records = {
+const defaultRecords = {
   "users/1": {
     id: 1,
     name: "bob",
@@ -61,4 +61,4 @@ const records = {
   }
 };
 
-module.exports = { recordTypes, records };
+module.exports = { recordTypes, defaultRecords };

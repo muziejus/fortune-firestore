@@ -3,7 +3,7 @@ const { expect } = require("chai");
 const keys = require("fortune/lib/common/keys");
 const { ConflictError } = require("fortune/lib/common/errors");
 const { testIds, setupDB, teardown, buildAdapter } = require("../helpers");
-const { records } = require("../fixtures");
+const { defaultRecords } = require("../fixtures");
 
 describe("Fortune Firestore Adapter", function() {
   describe("#create(type, records, [meta])", async function() {
@@ -12,7 +12,7 @@ describe("Fortune Firestore Adapter", function() {
     const primaryKey = keys.primary;
 
     beforeEach(async function() {
-      db = await setupDB(null, records);
+      db = await setupDB(null, defaultRecords);
       adapter = await buildAdapter();
       await adapter.connect();
     });
