@@ -1,5 +1,4 @@
 /* eslint no-await-in-loop: 0, camelcase: 0 */
-const fs = require("fs");
 const Firestore = require("@google-cloud/firestore");
 const message = require("fortune/lib/common/message");
 const keys = require("fortune/lib/common/keys");
@@ -59,15 +58,16 @@ module.exports.setupDB = async (auth, data) => {
 };
 
 module.exports.teardown = async db => {
-  await db
+  return db
     .collection("users")
     .get()
     .then(refs =>
-      refs.docs.map(doc => {
-        db.collection("users")
+      refs.docs.map(doc =>
+        db
+          .collection("users")
           .doc(doc.id)
-          .delete();
-      })
+          .delete()
+      )
     );
 };
 
