@@ -27,7 +27,7 @@ describe("Fortune Firestore Adapter", function() {
     it("deletes records", async function() {
       const primaryKey = keys.primary;
       const numberDeleted = await adapter.delete("user", [1, 3]);
-      expect(numberDeleted).to.be.gte(1);
+      expect(numberDeleted).to.equal(1);
       const records = await adapter.find("user", [1, 2]);
       expect(records.count).to.equal(1);
       expect(records.map(record => record[primaryKey])).to.deep.equal([2]);
