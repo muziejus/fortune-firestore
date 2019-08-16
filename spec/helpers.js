@@ -12,7 +12,16 @@ const private_key =
   process.env.FIRESTORE_PRIVATE_KEY ||
   Buffer.from(process.env.FIRESTORE_PRIVATE_KEY_HEX, "hex").toString("ascii");
 
-module.exports.buildAdapter = async () => {
+module.exports.buildAdapter = async (options = {}) => {
+  const bufferEncoding = options.bufferEncoding || "base64";
+  let convertTimestamps = true;
+  if (options.convertTimestamps === false) {
+    convertTimestamps = false;
+  }
+  let nullUndefinedFields = true;
+  if (options.nullUndefinedFields === false) {
+    nullUndefinedFields = false;
+  }
   let adapter;
   try {
     adapter = new AdapterSingleton({
@@ -28,7 +37,10 @@ module.exports.buildAdapter = async () => {
           credentials: {
             client_email,
             private_key
-          }
+          },
+          bufferEncoding,
+          convertTimestamps,
+          nullUndefinedFields
         }
       ]
     });
